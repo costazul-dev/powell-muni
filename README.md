@@ -41,9 +41,16 @@ python3.11 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements-dev.txt
 
-cp .env.example .env                 # set API_511_KEY
 cp config.yaml.example config.yaml   # set stop codes; keep display.backend: emulator
+cp .env.example .env                 # set API_511_KEY
+
+python main.py                       # or: python main.py --config path/to/config.yaml
+pytest
 ```
+
+`main.py` logs to stdout. A failed fetch for a stop is logged and the previous
+arrivals are kept; once they are older than twice the fetch interval the row's
+times turn yellow.
 
 511 keys are limited to 60 requests/hour by default. The fetch interval is
 derived from the number of distinct stop codes and `api.max_requests_per_hour`
