@@ -1,0 +1,15 @@
+[Unit]
+Description=powell-muni transit display
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/powell-muni
+ExecStart=/opt/powell-muni/.venv/bin/python main.py --config /opt/powell-muni/config.yaml
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
