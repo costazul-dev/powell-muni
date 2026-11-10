@@ -22,7 +22,8 @@ transit/                 511 API access and response parsing
 display/                 Layout and rendering on the LED matrix
 tests/                   pytest suite
 tests/fixtures/          Recorded API responses used by tests
-docs/                    Reference material (511 API specification)
+docs/                    Reference material (511 API specification, Pi setup)
+deploy/                  systemd unit for the Pi
 config.yaml.example      Example app config; copy to config.yaml
 .env.example             Example secrets file; copy to .env
 requirements.txt         Runtime dependencies
@@ -64,10 +65,9 @@ pytest
 
 ## Raspberry Pi Deployment
 
-_To be written._ The hardware backend (`rgbmatrix` from
-[hzeller/rpi-rgb-led-matrix](https://github.com/hzeller/rpi-rgb-led-matrix))
-is built from source on the Pi and is not a pip dependency. Set
-`display.backend: hardware` in `config.yaml`.
+See [docs/PiSetup.md](docs/PiSetup.md) for hardware constraints, building the
+`rgbmatrix` bindings, configuration, and installing the systemd unit in
+`deploy/powell-muni.service`.
 
 ## Reference
 
