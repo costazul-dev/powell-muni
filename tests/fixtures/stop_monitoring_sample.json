@@ -1,0 +1,109 @@
+{
+  "Siri": {
+    "ServiceDelivery": {
+      "ResponseTimestamp": "2026-11-09T10:00:00-08:00",
+      "ProducerRef": "SF",
+      "Status": true,
+      "StopMonitoringDelivery": {
+        "version": "1.4",
+        "ResponseTimestamp": "2026-11-09T10:00:00-08:00",
+        "Status": true,
+        "MonitoredStopVisit": [
+          {
+            "RecordedAtTime": "2026-11-09T09:59:30-08:00",
+            "MonitoringRef": "00000",
+            "MonitoredVehicleJourney": {
+              "LineRef": "45",
+              "DirectionRef": "IB",
+              "PublishedLineName": "UNION-STOCKTON",
+              "OperatorRef": "SF",
+              "MonitoredCall": {
+                "StopPointRef": "00000",
+                "StopPointName": "Placeholder Stop",
+                "AimedArrivalTime": "2026-11-09T10:04:00-08:00",
+                "ExpectedArrivalTime": "2026-11-09T10:05:12-08:00"
+              }
+            }
+          },
+          {
+            "RecordedAtTime": "2026-11-09T09:59:30-08:00",
+            "MonitoringRef": "00000",
+            "MonitoredVehicleJourney": {
+              "LineRef": "45",
+              "DirectionRef": "IB",
+              "PublishedLineName": "UNION-STOCKTON",
+              "OperatorRef": "SF",
+              "MonitoredCall": {
+                "StopPointRef": "00000",
+                "StopPointName": "Placeholder Stop",
+                "AimedArrivalTime": "2026-11-09T10:14:00-08:00",
+                "ExpectedArrivalTime": "2026-11-09T10:16:40-08:00"
+              }
+            }
+          },
+          {
+            "RecordedAtTime": "2026-11-09T09:59:30-08:00",
+            "MonitoringRef": "00000",
+            "MonitoredVehicleJourney": {
+              "LineRef": "45",
+              "DirectionRef": "IB",
+              "PublishedLineName": "UNION-STOCKTON",
+              "OperatorRef": "SF",
+              "MonitoredCall": {
+                "StopPointRef": "00000",
+                "StopPointName": "Placeholder Stop",
+                "AimedArrivalTime": "2026-11-09T10:24:00-08:00",
+                "ExpectedArrivalTime": "2026-11-09T10:23:05-08:00"
+              }
+            }
+          },
+          {
+            "RecordedAtTime": "2026-11-09T09:59:30-08:00",
+            "MonitoringRef": "00000",
+            "MonitoredVehicleJourney": {
+              "LineRef": "45",
+              "DirectionRef": "IB",
+              "PublishedLineName": "UNION-STOCKTON",
+              "OperatorRef": "SF",
+              "MonitoredCall": {
+                "StopPointRef": "00000",
+                "StopPointName": "Placeholder Stop",
+                "AimedArrivalTime": "2026-11-09T10:34:00-08:00"
+              }
+            }
+          },
+          {
+            "RecordedAtTime": "2026-11-09T09:59:30-08:00",
+            "MonitoringRef": "00000",
+            "MonitoredVehicleJourney": {
+              "LineRef": "45",
+              "DirectionRef": "IB",
+              "PublishedLineName": "UNION-STOCKTON",
+              "OperatorRef": "SF",
+              "MonitoredCall": {
+                "StopPointRef": "00000",
+                "StopPointName": "Placeholder Stop"
+              }
+            }
+          },
+          {
+            "RecordedAtTime": "2026-11-09T09:59:30-08:00",
+            "MonitoringRef": "00000",
+            "MonitoredVehicleJourney": {
+              "LineRef": "30",
+              "DirectionRef": "IB",
+              "PublishedLineName": "STOCKTON",
+              "OperatorRef": "SF",
+              "MonitoredCall": {
+                "StopPointRef": "00000",
+                "StopPointName": "Placeholder Stop",
+                "AimedArrivalTime": "2026-11-09T10:07:00-08:00",
+                "ExpectedArrivalTime": "2026-11-09T10:08:30-08:00"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
