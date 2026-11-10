@@ -1,0 +1,37 @@
+# Copy to config.yaml and fill in real stop codes.
+
+api:
+  agency: SF
+  # 511 keys default to 60 requests/hour; the fetch interval is derived from
+  # this value and the number of distinct stop codes below.
+  max_requests_per_hour: 50
+
+# One row per line. Direction is implied by the stop_code.
+rows:
+  - line: "45"
+    stop_code: "00000"
+    color: blue
+  - line: "1"
+    stop_code: "00000"
+    color: blue
+  - line: "T"
+    stop_code: "00000"
+    color: red
+
+# RGB triples, 0-255.
+colors:
+  blue: [0, 90, 200]
+  red: [220, 30, 30]
+  white: [255, 255, 255]
+  yellow: [255, 200, 0]
+
+display:
+  backend: emulator  # emulator | hardware
+  redraw_seconds: 15
+  font: fonts/9x18.bdf
+  brightness: 60
+  hardware:
+    rows: 64
+    cols: 128
+    hardware_mapping: adafruit-hat
+    gpio_slowdown: 4
