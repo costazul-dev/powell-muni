@@ -24,6 +24,8 @@ colors:
   red: [220, 30, 30]
   white: [255, 255, 255]
   yellow: [255, 200, 0]
+  gray: [120, 120, 120]
+  dim: [60, 60, 60]
 
 display:
   backend: emulator  # emulator | hardware

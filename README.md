@@ -20,10 +20,17 @@ Each row shows one direction, set by the configured `stop_code`.
 main.py                  Orchestrator: load config, fetch, render, loop
 transit/                 511 API access and response parsing
 display/                 Layout and rendering on the LED matrix
+display/designs.py       Candidate layouts A-E drawn from showcase cards
+display/showcase.py      Sample cards and timing for showcase mode
 assets/                  PNG pixel art drawn on the display
+assets/icons/            Vehicle icons for layouts D and E
+fonts/                   BDF fonts
 tests/                   pytest suite
 tests/fixtures/          Recorded API responses used by tests
+tests/fixtures/layouts/  Exact 128x64 reference frames of the candidate layouts
 docs/                    Reference material (511 API specification, Pi setup)
+docs/LayoutSpecs.md      Coordinates, fonts, and colors of the candidate layouts
+docs/layouts/            LED-style previews of the candidate layouts
 deploy/                  systemd unit for the Pi
 config.yaml.example      Example app config; copy to config.yaml
 .env.example             Example secrets file; copy to .env
@@ -57,6 +64,24 @@ times turn yellow.
 511 keys are limited to 60 requests/hour by default. The fetch interval is
 derived from the number of distinct stop codes and `api.max_requests_per_hour`
 (default `50`).
+
+### Showcase Mode
+
+Showcase mode draws the five candidate layouts in
+[docs/LayoutSpecs.md](docs/LayoutSpecs.md) with hard-coded sample data, so the
+layouts can be compared in the emulator at `http://localhost:8888`. It makes no
+511 requests and needs no API key.
+
+```bash
+python main.py --showcase            # cycle layouts A-E, 15 s each
+python main.py --layout C            # hold one layout
+python main.py --stale               # draw times in yellow, as for stale data
+```
+
+`--layout` and `--stale` each imply `--showcase` and can be combined. Rotating
+layouts (A, C, D) switch lines every 5 s. A `config.yaml` copied before showcase
+mode existed needs `gray: [120, 120, 120]` and `dim: [60, 60, 60]` added to
+`colors`; see `config.yaml.example`.
 
 ### Assets
 

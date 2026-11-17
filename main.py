@@ -3,6 +3,9 @@
 Fetching and drawing run on separate cadences. Each stop is fetched every
 `fetch_interval_seconds` to stay under the 511 hourly cap; rows are redrawn every
 `display.redraw_seconds` from cached arrivals so countdowns keep ticking between fetches.
+
+`--showcase` instead cycles the candidate layouts in `display/designs.py` with sample
+data and makes no API requests.
 """
 
 import argparse
@@ -12,8 +15,10 @@ import time
 from datetime import datetime, timedelta, timezone
 
 from config import load_api_key, load_config
+from display.designs import DESIGNS, load_icons
 from display.layout import build_rows
-from display.render import create_matrix, draw_rows, load_backend, load_font, show
+from display.render import create_matrix, draw_rows, load_backend, load_font, load_fonts, show
+from display.showcase import LAYOUT_SECONDS, LAYOUTS, LINE_SECONDS, SAMPLE_CARDS, TICK_SECONDS, showcase_frame
 from transit.fetch import fetch_interval_seconds, get_stop_monitoring
 from transit.parse import Arrival, parse_arrivals
 
@@ -50,14 +55,42 @@ def refresh_all(
         logger.info("fetched %d arrivals for stop %s", len(arrivals), stop_code)
 
 
+def run_showcase(config: dict, pinned: str | None, stale: bool) -> None:
+    """Cycle the candidate layouts with sample cards, or hold `pinned`; no API key or 511 requests."""
+    colors = config["colors"]
+    backend = load_backend(config["display"]["backend"])
+    matrix = create_matrix(backend, config["display"])
+    canvas = matrix.CreateFrameCanvas()
+    fonts = load_fonts(backend)
+    icons = load_icons(colors)
+
+    shown: str | None = None
+    start = time.monotonic()
+    while True:
+        layout, active = showcase_frame(time.monotonic() - start, LAYOUT_SECONDS, LINE_SECONDS, pinned)
+        if layout != shown:
+            logger.info("showcase: layout %s", layout)
+            shown = layout
+        DESIGNS[layout](canvas, backend, fonts, icons, SAMPLE_CARDS, active, colors, stale)
+        canvas = show(matrix, canvas)
+        time.sleep(TICK_SECONDS)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Muni departure board for an RGB LED matrix")
     parser.add_argument("--config", default="config.yaml", help="path to the YAML config (default: config.yaml)")
+    parser.add_argument("--showcase", action="store_true", help="cycle the candidate layouts with sample data")
+    parser.add_argument("--layout", choices=LAYOUTS, help="pin one candidate layout (implies --showcase)")
+    parser.add_argument("--stale", action="store_true", help="draw showcase times in yellow (implies --showcase)")
     args = parser.parse_args()
 
     logging.basicConfig(stream=sys.stdout, level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 
     config = load_config(args.config)
+    if args.showcase or args.layout or args.stale:
+        run_showcase(config, args.layout, args.stale)
+        return
+
     api_key = load_api_key()
     agency = config["api"]["agency"]
     rows_config = config["rows"]

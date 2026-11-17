@@ -5,6 +5,7 @@ backend module as an argument and the drawing code is the same on macOS and the 
 """
 
 import importlib
+from pathlib import Path
 from types import ModuleType
 
 from display.layout import Row
@@ -19,6 +20,8 @@ PANEL_HEIGHT = 64
 BADGE_PADDING = 2
 BADGE_GAP = 3
 BADGE_TEXT_RGB = [255, 255, 255]
+FONTS_DIR = Path(__file__).resolve().parent.parent / "fonts"
+LAYOUT_FONTS = ("6x10", "5x8", "10x20", "7x13B", "9x18B")
 
 
 def load_backend(name: str) -> ModuleType:
@@ -45,6 +48,11 @@ def load_font(backend: ModuleType, path: str):
     font = backend.graphics.Font()
     font.LoadFont(path)
     return font
+
+
+def load_fonts(backend: ModuleType) -> dict:
+    """The layout fonts from `fonts/*.bdf`, keyed by name (`"6x10"`, `"5x8"`, ...)."""
+    return {name: load_font(backend, str(FONTS_DIR / f"{name}.bdf")) for name in LAYOUT_FONTS}
 
 
 def to_color(backend: ModuleType, rgb: list[int]):
