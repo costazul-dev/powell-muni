@@ -20,6 +20,7 @@ Each row shows one direction, set by the configured `stop_code`.
 main.py                  Orchestrator: load config, fetch, render, loop
 transit/                 511 API access and response parsing
 display/                 Layout and rendering on the LED matrix
+assets/                  PNG pixel art drawn on the display
 tests/                   pytest suite
 tests/fixtures/          Recorded API responses used by tests
 docs/                    Reference material (511 API specification, Pi setup)
@@ -56,6 +57,20 @@ times turn yellow.
 511 keys are limited to 60 requests/hour by default. The fetch interval is
 derived from the number of distinct stop codes and `api.max_requests_per_hour`
 (default `50`).
+
+### Assets
+
+Pixel art is drawn in Pixelorama and stored as PNG in `assets/`. One image
+pixel is one LED.
+
+1. Draw at the exact size the art will occupy, no larger than the 128x64 panel.
+2. Export as PNG at 1x scale with a transparent background.
+3. Save to `assets/<name>.png`.
+4. Load it with `display.image.load_image` and draw it with
+   `display.render.draw_image(canvas, image, x, y)`.
+
+Fully transparent pixels are skipped, so whatever is already on the canvas
+shows through; every other pixel is drawn with its RGB value as-is.
 
 ## Running Tests
 

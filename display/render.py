@@ -14,6 +14,7 @@ BACKEND_MODULES = {
     "hardware": "rgbmatrix",
 }
 
+PANEL_WIDTH = 128
 PANEL_HEIGHT = 64
 BADGE_PADDING = 2
 BADGE_GAP = 3
@@ -84,6 +85,19 @@ def draw_rows(canvas, backend: ModuleType, font, rows: list[Row], colors: dict) 
     row_height = PANEL_HEIGHT // len(rows)
     for index, row in enumerate(rows):
         draw_row(canvas, backend, font, index * row_height, row, colors)
+
+
+def draw_image(canvas, image, x: int, y: int) -> None:
+    """Draw an RGBA `image` with its top-left at (`x`, `y`), skipping fully transparent pixels.
+
+    Pixels are set one at a time because `canvas.SetImage` drops the alpha mask; pixels off
+    the panel are left to the backend's `SetPixel`, which ignores them.
+    """
+    for index, (r, g, b, a) in enumerate(image.getdata()):
+        if a == 0:
+            continue
+        row, col = divmod(index, image.width)
+        canvas.SetPixel(x + col, y + row, r, g, b)
 
 
 def show(matrix, canvas):
